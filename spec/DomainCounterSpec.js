@@ -17,7 +17,7 @@ describe("getDomains", function() {
 	expect(getDomains([[1]])).toEqual([[[0,0]]]);
     });
 
-    it("should return all dommains on matrix with 1 cell sized dommains", function() {
+    it("should return all dommains on matrix with single cell sized dommains", function() {
 	expect(getDomains([
 	    [1, 0, 1, 0],
 	    [0, 0, 0, 0],
@@ -28,6 +28,20 @@ describe("getDomains", function() {
 	    [[0,2]],
 	    [[3,1]],
 	    [[3,3]],
+	]);
+    });
+
+    it("should return all dommains on matrix with multi-cell sized dommains", function() {
+	expect(getDomains([
+	    [1, 0, 1, 0],
+	    [1, 1, 0, 0],
+	    [0, 0, 0, 1],
+	    [0, 1, 0, 1]
+	])).toEqual([
+	    [[0,0], [1,0], [1,1]],
+	    [[0,2]],
+	    [[2,3], [3,3]],
+	    [[3,1]],
 	]);
     });
 });
