@@ -56,3 +56,66 @@ function getDomains (matrix) {
 
     return result;
 };
+
+var matrix = [];
+var width = 0;
+var height = 0;
+
+function parseDimentionsInput() {
+    const maxSize = 40;
+    const minSize = 3;
+    var widthInput = document.getElementById("width");
+    var heightInput = document.getElementById("height");
+    
+    width = parseFloat(widthInput.value);
+    height = parseFloat(heightInput.value);
+
+    if (isNaN(width)) {
+	width = 3;
+    }
+    width = Math.min(40, Math.max(3, Math.floor(width)));
+    
+    if (isNaN(height)) {
+	height = 3;
+    }
+    height = Math.min(40, Math.max(3, Math.floor(height)));
+
+    if (widthInput.value != width || heightInput.value != height) {
+	widthInput.value = width;
+	heightInput.value = height;
+	console.log("Wrong value");
+    }
+
+}
+
+function createInputTable() {
+    parseDimentionsInput();
+
+    matrix = [];
+    var tableElement = document.getElementById("input-table");
+    var tableContents = "";
+
+    for (i = 0; i < height; i++) {
+	matrix.push([]);
+	tableContents += "<tr>";
+	for (j = 0; j < width; j++) {
+	    matrix[i].push(0);
+	    tableContents += "<td id=\"cell-" + i + "-" + j + "\" " +
+		"onclick=\"switchCell(" + i + "," + j + ")\">0</td>";
+	}
+	tableContents += "</tr>";
+    }
+    tableElement.innerHTML = tableContents;
+};
+
+function switchCell(i, j) {
+    var cell = document.getElementById("cell-" + i + "-" + j);
+    matrix[i][j] = (matrix[i][j] == 0) ? 1 : 0;
+    cell.innerHTML = matrix[i][j];
+}
+
+function countDomains() {
+    console.log(JSON.stringify(matrix));
+    var domains = getDomains(matrix);
+    console.log(JSON.stringify(domains));
+}
