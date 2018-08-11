@@ -114,8 +114,40 @@ function switchCell(i, j) {
     cell.innerHTML = matrix[i][j];
 }
 
+var colorPalete = ["#e52e2e",
+		   "#e5b52e",
+		   "#90e62e",
+		   "#2ee696",
+		   "#2eaee6",
+		   "#342ee6",
+		   "#bb2ee6",
+		   "#e52e8a",
+		   "#e5712e",
+		   "#d3e62e",
+		   "#4de62e",
+		   "#2ee6d9",
+		   "#2e6be6",
+		   "#772ee6",
+		   "#e62ecd",
+		   "#e52e46"];
+
+function clearColoring() {
+    var cells = document.getElementById("input-table").getElementsByTagName("td");
+
+    for (var i in cells) {
+	cells[i].style = "";
+    }
+}
+
 function countDomains() {
+    clearColoring();
     console.log(JSON.stringify(matrix));
     var domains = getDomains(matrix);
     console.log(JSON.stringify(domains));
+    for (var i in domains) {
+	for (var j in domains[i]) {
+	    var cell = document.getElementById("cell-" + domains[i][j][0] + "-" + domains[i][j][1]);
+	    cell.style = "background-color: " + colorPalete[i] + ";";
+	}
+    }
 }
