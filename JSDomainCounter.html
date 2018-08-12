@@ -2,7 +2,8 @@
   <head>
     <meta charset="utf-8">
     <title>JS Domain Counter</title>
-      <script src="src/DomainCounter.js"></script>
+    <script src="src/DomainCounter.js"></script>
+    <link rel="stylesheet" type="text/css" href="src/DomainCounter.css">
   </head>
   <body>
     <form>
@@ -11,7 +12,7 @@
       <input type="number" value="4" id="height"></input>
       <button type="button" onclick="createInputTable()">Создать</button>
     </form>
-    <table id="input-table">
+    <table id="input-table" class="unselectable">
     </table>
     <button type="button" onclick="countDomains()">Найти домены</button>
   </body>

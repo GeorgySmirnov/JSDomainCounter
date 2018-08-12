@@ -147,7 +147,7 @@ function countDomains() {
     for (var i in domains) {
 	for (var j in domains[i]) {
 	    var cell = document.getElementById("cell-" + domains[i][j][0] + "-" + domains[i][j][1]);
-	    cell.style = "background-color: " + colorPalete[i] + ";";
+	    cell.style = "background-color: " + colorPalete[i % colorPalete.length] + ";";
 	}
     }
 }
