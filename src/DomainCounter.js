@@ -57,6 +57,19 @@ function getDomains (matrix) {
     return result;
 };
 
+function randomFill(height, width, probability) {
+    var result = [];
+
+    for (i = 0; i < height; i++) {
+	result.push([]);
+	for (j = 0; j < width; j++) {
+	    result[i].push(Math.random() < probability ? 1 : 0);
+	}
+    }
+    console.log(result);
+    return result;
+};
+
 var matrix = [];
 var width = 0;
 var height = 0;
