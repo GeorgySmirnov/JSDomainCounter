@@ -66,7 +66,6 @@ function randomFill(height, width, probability) {
 	    result[i].push(Math.random() < probability ? 1 : 0);
 	}
     }
-    console.log(result);
     return result;
 };
 
@@ -154,13 +153,47 @@ function clearColoring() {
 
 function countDomains() {
     clearColoring();
-    console.log(JSON.stringify(matrix));
     var domains = getDomains(matrix);
-    console.log(JSON.stringify(domains));
     for (var i in domains) {
 	for (var j in domains[i]) {
 	    var cell = document.getElementById("cell-" + domains[i][j][0] + "-" + domains[i][j][1]);
 	    cell.style = "background-color: " + colorPalete[i % colorPalete.length] + ";";
 	}
     }
+}
+
+function fillTable() {
+    for (var i in matrix) {
+	for (var j in matrix[i]) {
+	    var cell = document.getElementById("cell-" + i + "-" + j);
+	    cell.innerHTML = matrix[i][j];
+	}
+    }
+}
+
+function parseProbabilityInput() {
+    var input = document.getElementById("probability");
+
+    var probability = parseFloat(input.value);
+
+    if (isNaN(probability)) {
+	probability = 0.1;
+    }
+
+    probability = Math.min(0.99, Math.max(0.01, probability));
+
+    if (probability != input.value) {
+	input.value = probability;
+	console.log("Wrong probability");
+    }
+    return probability;
+}
+
+function fillTableRandomly() {
+    var probability = parseProbabilityInput();
+
+    createInputTable();
+    matrix = randomFill(height, width, probability);
+    fillTable();
+    countDomains();
 }
