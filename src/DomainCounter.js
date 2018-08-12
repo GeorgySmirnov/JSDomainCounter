@@ -69,9 +69,9 @@ function randomFill(height, width, probability) {
     return result;
 };
 
-var matrix = [];
-var width = 0;
-var height = 0;
+var gMatrix = [];
+var gWidth = 0;
+var gHeight = 0;
 
 function parseDimentionsInput() {
     const maxSize = 40;
@@ -79,22 +79,22 @@ function parseDimentionsInput() {
     var widthInput = document.getElementById("width");
     var heightInput = document.getElementById("height");
     
-    width = parseFloat(widthInput.value);
-    height = parseFloat(heightInput.value);
+    gWidth = parseFloat(widthInput.value);
+    gHeight = parseFloat(heightInput.value);
 
-    if (isNaN(width)) {
-	width = 3;
+    if (isNaN(gWidth)) {
+	gWidth = 3;
     }
-    width = Math.min(40, Math.max(3, Math.floor(width)));
+    gWidth = Math.min(40, Math.max(3, Math.floor(gWidth)));
     
-    if (isNaN(height)) {
-	height = 3;
+    if (isNaN(gHeight)) {
+	gHeight = 3;
     }
-    height = Math.min(40, Math.max(3, Math.floor(height)));
+    gHeight = Math.min(40, Math.max(3, Math.floor(gHeight)));
 
-    if (widthInput.value != width || heightInput.value != height) {
-	widthInput.value = width;
-	heightInput.value = height;
+    if (widthInput.value != gWidth || heightInput.value != gHeight) {
+	widthInput.value = gWidth;
+	heightInput.value = gHeight;
 	console.log("Wrong value");
     }
 
@@ -103,15 +103,15 @@ function parseDimentionsInput() {
 function createInputTable() {
     parseDimentionsInput();
 
-    matrix = [];
+    gMatrix = [];
     var tableElement = document.getElementById("input-table");
     var tableContents = "";
 
-    for (i = 0; i < height; i++) {
-	matrix.push([]);
+    for (i = 0; i < gHeight; i++) {
+	gMatrix.push([]);
 	tableContents += "<tr>";
-	for (j = 0; j < width; j++) {
-	    matrix[i].push(0);
+	for (j = 0; j < gWidth; j++) {
+	    gMatrix[i].push(0);
 	    tableContents += "<td id=\"cell-" + i + "-" + j + "\" " +
 		"onclick=\"switchCell(" + i + "," + j + ")\">0</td>";
 	}
@@ -122,8 +122,8 @@ function createInputTable() {
 
 function switchCell(i, j) {
     var cell = document.getElementById("cell-" + i + "-" + j);
-    matrix[i][j] = (matrix[i][j] == 0) ? 1 : 0;
-    cell.innerHTML = matrix[i][j];
+    gMatrix[i][j] = (gMatrix[i][j] == 0) ? 1 : 0;
+    cell.innerHTML = gMatrix[i][j];
 }
 
 var colorPalete = ["#e52e2e",
@@ -153,20 +153,21 @@ function clearColoring() {
 
 function countDomains() {
     clearColoring();
-    var domains = getDomains(matrix);
+    var domains = getDomains(gMatrix);
     for (var i in domains) {
 	for (var j in domains[i]) {
 	    var cell = document.getElementById("cell-" + domains[i][j][0] + "-" + domains[i][j][1]);
 	    cell.style = "background-color: " + colorPalete[i % colorPalete.length] + ";";
 	}
     }
+    return domains;
 }
 
 function fillTable() {
-    for (var i in matrix) {
-	for (var j in matrix[i]) {
+    for (var i in gMatrix) {
+	for (var j in gMatrix[i]) {
 	    var cell = document.getElementById("cell-" + i + "-" + j);
-	    cell.innerHTML = matrix[i][j];
+	    cell.innerHTML = gMatrix[i][j];
 	}
     }
 }
@@ -193,7 +194,15 @@ function fillTableRandomly() {
     var probability = parseProbabilityInput();
 
     createInputTable();
-    matrix = randomFill(height, width, probability);
+    gMatrix = randomFill(gHeight, gWidth, probability);
     fillTable();
-    countDomains();
+    var domains = countDomains();
+    var logTable = document.getElementById("autofill-log-body");
+    var logEntrys = logTable.getElementsByClassName("log-entry");
+    if (logEntrys.length >= 10) {
+	logTable.removeChild(logEntrys[0]);
+    }
+    logTable.innerHTML += "<tr class=\"log-entry\"><td>" + probability + "</td><td>" +
+	domains.length + "</td><td>" +
+	gHeight + "*" + gWidth + "</td></tr>";
 }
