@@ -33,3 +33,7 @@
 input {
     width: 50;
 }
+
+#probability-error, #matrix-dimentions-error {
+    color: red;
+}

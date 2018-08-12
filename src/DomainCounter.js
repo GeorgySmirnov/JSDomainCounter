@@ -95,7 +95,10 @@ function parseDimentionsInput() {
     if (widthInput.value != gWidth || heightInput.value != gHeight) {
 	widthInput.value = gWidth;
 	heightInput.value = gHeight;
-	console.log("Wrong value");
+	document.getElementById("matrix-dimentions-error").innerHTML = "Размеры матрицы должны быть целыми числами в интервале от 3 до 40!";
+	window.setTimeout(function() {
+	    document.getElementById("matrix-dimentions-error").innerHTML = "";
+	}, 10000);
     }
 
 }
@@ -160,6 +163,7 @@ function countDomains() {
 	    cell.style = "background-color: " + colorPalete[i % colorPalete.length] + ";";
 	}
     }
+    document.getElementById("domain-number").innerHTML = domains.length;
     return domains;
 }
 
@@ -185,7 +189,10 @@ function parseProbabilityInput() {
 
     if (probability != input.value) {
 	input.value = probability;
-	console.log("Wrong probability");
+	document.getElementById("probability-error").innerHTML = "Вероятность должна быть числом в интервале от 0.01 до 0.99!";
+	window.setTimeout(function() {
+	    document.getElementById("probability-error").innerHTML = "";
+	}, 10000);
     }
     return probability;
 }
