@@ -6,3 +6,30 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+#input-table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+
+#input-table td {
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid black;
+}
+
+#autofill-log {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+#autofill-log td,th {
+    border: 1px solid black;
+}
+
+input {
+    width: 50;
+}
