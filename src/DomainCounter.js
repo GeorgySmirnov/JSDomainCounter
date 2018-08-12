@@ -124,9 +124,8 @@ function createInputTable() {
 };
 
 function switchCell(i, j) {
-    var cell = document.getElementById("cell-" + i + "-" + j);
     gMatrix[i][j] = (gMatrix[i][j] == 0) ? 1 : 0;
-    cell.innerHTML = gMatrix[i][j];
+    fillTable();
 }
 
 var colorPalete = ["#e52e2e",
@@ -172,8 +171,14 @@ function fillTable() {
 	for (var j in gMatrix[i]) {
 	    var cell = document.getElementById("cell-" + i + "-" + j);
 	    cell.innerHTML = gMatrix[i][j];
+	    if (gMatrix[i][j] === 1) {
+		cell.style = "background-color: lightgray;";
+	    } else {
+		cell.style = "";
+	    }
 	}
     }
+    document.getElementById("domain-number").innerHTML = "";
 }
 
 function parseProbabilityInput() {
