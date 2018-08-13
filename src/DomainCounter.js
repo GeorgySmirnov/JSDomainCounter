@@ -79,34 +79,36 @@ function parseDimentionsInput() {
     var widthInput = document.getElementById("width");
     var heightInput = document.getElementById("height");
     
-    gWidth = parseFloat(widthInput.value);
-    gHeight = parseFloat(heightInput.value);
+    var width = parseFloat(widthInput.value);
+    var height = parseFloat(heightInput.value);
 
-    if (isNaN(gWidth)) {
-	gWidth = 3;
+    if (isNaN(width)) {
+	width = 3;
     }
-    gWidth = Math.min(40, Math.max(3, Math.floor(gWidth)));
+    width = Math.min(40, Math.max(3, Math.floor(width)));
     
-    if (isNaN(gHeight)) {
-	gHeight = 3;
+    if (isNaN(height)) {
+	height = 3;
     }
-    gHeight = Math.min(40, Math.max(3, Math.floor(gHeight)));
+    height = Math.min(40, Math.max(3, Math.floor(height)));
 
-    if (widthInput.value != gWidth || heightInput.value != gHeight) {
-	widthInput.value = gWidth;
-	heightInput.value = gHeight;
+    if (widthInput.value != width || heightInput.value != height) {
+	widthInput.value = width;
+	heightInput.value = height;
 	document.getElementById("matrix-dimentions-error").innerHTML = "Размеры матрицы должны быть целыми числами в интервале от 3 до 40!";
 	window.setTimeout(function() {
 	    document.getElementById("matrix-dimentions-error").innerHTML = "";
 	}, 10000);
     }
-
+    return { "width" : width , "height" : height };
 }
 
 function createInputTable() {
-    parseDimentionsInput();
+    var dimentions = parseDimentionsInput();
 
     gMatrix = [];
+    gWidth = dimentions["width"];
+    gHeight = dimentions["height"];
     var tableElement = document.getElementById("input-table");
     var tableContents = "";
 
@@ -205,7 +207,9 @@ function parseProbabilityInput() {
 function fillTableRandomly() {
     var probability = parseProbabilityInput();
 
-    createInputTable();
+    if (gMatrix.length == 0) {
+	createInputTable();
+    }
     gMatrix = randomFill(gHeight, gWidth, probability);
     fillTable();
     var domains = countDomains();
